@@ -30,16 +30,13 @@ body {
   width: 100%;
   max-width: 400px;
   margin: 20px auto;
-  border-radius: 30%;
+  border-radius: 10px;
   border: none;
   font-size: 24px;
   user-select: none;
   outline: none;
   text-align: center;
   transition: all 0.3s ease-in-out;
-}
-#searchInput:focus {
-  border: 3px solid var(--accent-color);
 }
 
 #gamesContainer {
@@ -60,10 +57,10 @@ body {
   margin: 10px;
   transition: transform 0.3s ease;
   border: 2px;
-  border-radius: 30%;
+  border-radius: 10px;
 }
 .game:hover {
-  transform: scale(0.95);
+  transform: scale(1.05);
   border: 2px solid var(--accent-color);
 }
 .game img {
