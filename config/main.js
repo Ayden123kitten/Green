@@ -6,6 +6,8 @@ document.getElementById("title").innerHTML = sitename;
 document.getElementById("subtitle").innerHTML = subtext;
 
 let gamesData = [];
+let selectedCategories = [];
+let allCategories = [];
 
 function displayFilteredGames(filteredGames) {
   const gamesContainer = document.getElementById("gamesContainer");
@@ -32,13 +34,55 @@ function displayFilteredGames(filteredGames) {
   });
 }
 
+function renderCategoryFilters() {
+  const categoryFiltersContainer = document.getElementById("categoryFilters");
+  categoryFiltersContainer.innerHTML = "";
+
+  allCategories.forEach((category) => {
+    const checkboxLabel = document.createElement("label");
+    checkboxLabel.style.margin = "0 10px";
+    checkboxLabel.style.cursor = "pointer";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = category;
+    checkbox.checked = selectedCategories.includes(category);
+
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        selectedCategories.push(category);
+      } else {
+        selectedCategories = selectedCategories.filter(
+          (cat) => cat !== category
+        );
+      }
+      handleSearchInput();
+    });
+
+    const labelText = document.createElement("span");
+    labelText.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+
+    checkboxLabel.appendChild(checkbox);
+    checkboxLabel.appendChild(labelText);
+    categoryFiltersContainer.appendChild(checkboxLabel);
+  });
+}
+
 function handleSearchInput() {
   const searchInputValue = document
     .getElementById("searchInput")
     .value.toLowerCase();
-  const filteredGames = gamesData.filter((game) =>
-    game.name.toLowerCase().includes(searchInputValue)
-  );
+  
+  const filteredGames = gamesData.filter((game) => {
+    const matchesSearch = game.name.toLowerCase().includes(searchInputValue);
+    const matchesCategories =
+      selectedCategories.length === 0 ||
+      selectedCategories.every((cat) =>
+        (game.categories || []).includes(cat)
+      );
+    return matchesSearch && matchesCategories;
+  });
+  
   displayFilteredGames(filteredGames);
 }
 
@@ -46,6 +90,16 @@ fetch("/config/games.json")
   .then((response) => response.json())
   .then((data) => {
     gamesData = data;
+    
+    const categorySet = new Set();
+    data.forEach((game) => {
+      if (game.categories) {
+        game.categories.forEach((cat) => categorySet.add(cat));
+      }
+    });
+    allCategories = Array.from(categorySet).sort();
+    
+    renderCategoryFilters();
     displayFilteredGames(data);
   })
   .catch((error) => console.error("Error fetching games:", error));
