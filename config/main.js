@@ -39,32 +39,27 @@ function renderCategoryFilters() {
   categoryFiltersContainer.innerHTML = "";
 
   allCategories.forEach((category) => {
-    const checkboxLabel = document.createElement("label");
-    checkboxLabel.style.margin = "0 10px";
-    checkboxLabel.style.cursor = "pointer";
+    const categoryButton = document.createElement("div");
+    categoryButton.classList.add("category-filter");
+    if (selectedCategories.includes(category)) {
+      categoryButton.classList.add("selected");
+    }
+    categoryButton.textContent = category.charAt(0).toUpperCase() + category.slice(1);
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.value = category;
-    checkbox.checked = selectedCategories.includes(category);
-
-    checkbox.addEventListener("change", () => {
-      if (checkbox.checked) {
-        selectedCategories.push(category);
-      } else {
+    categoryButton.addEventListener("click", () => {
+      if (selectedCategories.includes(category)) {
         selectedCategories = selectedCategories.filter(
           (cat) => cat !== category
         );
+        categoryButton.classList.remove("selected");
+      } else {
+        selectedCategories.push(category);
+        categoryButton.classList.add("selected");
       }
       handleSearchInput();
     });
 
-    const labelText = document.createElement("span");
-    labelText.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-
-    checkboxLabel.appendChild(checkbox);
-    checkboxLabel.appendChild(labelText);
-    categoryFiltersContainer.appendChild(checkboxLabel);
+    categoryFiltersContainer.appendChild(categoryButton);
   });
 }
 
