@@ -1,39 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-
-    <script src="config/main.js" type="module"></script>
+    <title>Game</title>
     <style>
       body {
         margin: 0;
         padding: 0;
+        overflow: hidden;
+        background: #000;
       }
-
       iframe {
-        width: 100%;
+        width: 100vw;
         height: 100vh;
         border: none;
       }
     </style>
   </head>
   <body>
-    <iframe id="gameFrame"></iframe>
-
+    <iframe id="gameFrame" allowfullscreen></iframe>
     <script>
-      var serverUrl1 = "https://gms.parcoil.com";
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
+      const urlParams = new URLSearchParams(window.location.search);
       const gameUrl = urlParams.get("gameurl");
 
       if (!gameUrl) {
         alert("Game URL not provided!");
-        window.location.href = "/"; // Redirect to homepage if game URL is missing
+        window.location.href = "/";
       } else {
-        const embedUrl = `${serverUrl1}/${gameUrl}`;
-        document.getElementById("gameFrame").src = embedUrl;
+        document.getElementById("gameFrame").src = gameUrl;
       }
     </script>
   </body>

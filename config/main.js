@@ -1,20 +1,10 @@
-// This changes the title of your site
+var sitename = "Green";
+var subtext = "Poggers.";
 
-var sitename = "Flint And Steel Games"; // Change this to change the name of your website.
-var subtext = "Poggers."; // set the subtext
+document.title = `${document.title} | ${sitename}`;
+document.getElementById("title").innerHTML = sitename;
+document.getElementById("subtitle").innerHTML = subtext;
 
-// more settings in main.css
-
-
-
-// END CONFIG
-// DO NOT MODIFY IF YOU DO NOT KNOW WHAT YOUR DOING!
-
-import "/./config/custom.js";
-
-var serverUrl1 = "https://gms.parcoil.com";
-var currentPageTitle = document.title;
-document.title = `${currentPageTitle} | ${sitename}`;
 let gamesData = []; 
 
 function displayFilteredGames(filteredGames) {
@@ -26,10 +16,11 @@ function displayFilteredGames(filteredGames) {
     gameDiv.classList.add("game");
 
     const gameImage = document.createElement("img");
-    gameImage.src = `${serverUrl1}/${game.url}/${game.image}`;
+    gameImage.src = game.image;
     gameImage.alt = game.name;
+    
     gameImage.onclick = () => {
-      window.location.href = `play.html?gameurl=${game.url}/`;
+      window.location.href = `play.html?gameurl=${encodeURIComponent(game.url)}`;
     };
 
     const gameName = document.createElement("p");
@@ -41,19 +32,15 @@ function displayFilteredGames(filteredGames) {
   });
 }
 
-
 function handleSearchInput() {
-  const searchInputValue = document
-    .getElementById("searchInput")
-    .value.toLowerCase();
+  const searchInputValue = document.getElementById("searchInput").value.toLowerCase();
   const filteredGames = gamesData.filter((game) =>
     game.name.toLowerCase().includes(searchInputValue)
   );
   displayFilteredGames(filteredGames);
 }
 
-
-fetch("./config/games.json") 
+fetch("/config/games.json") 
   .then((response) => response.json())
   .then((data) => {
     gamesData = data;
@@ -61,12 +48,4 @@ fetch("./config/games.json")
   })
   .catch((error) => console.error("Error fetching games:", error));
 
-
-document
-  .getElementById("searchInput")
-  .addEventListener("input", handleSearchInput);
-
-document.getElementById("title").innerHTML = `${sitename}`;
-
-document.getElementById("subtitle").innerHTML = `${subtext}`
-
+document.getElementById("searchInput").addEventListener("input", handleSearchInput);
