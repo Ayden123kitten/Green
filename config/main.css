@@ -7,7 +7,6 @@
   --accent-color: #009000 !important;
 }
 
-
 * {
   font-family: ubuntu;
   transition: all 0.3s ease;
@@ -31,8 +30,8 @@ body {
   width: 100%;
   max-width: 400px;
   margin: 20px auto;
-  border-radius: 10px;
-  border: 3px solid transparent;
+  border-radius: 30%;
+  border: none;
   font-size: 24px;
   user-select: none;
   outline: none;
@@ -40,7 +39,7 @@ body {
   transition: all 0.3s ease-in-out;
 }
 #searchInput:focus {
-  border-color: var(--accent-color);
+  border: 3px solid var(--accent-color);
 }
 
 #gamesContainer {
@@ -53,7 +52,7 @@ body {
 
 .game {
   margin: 10px;
-  
+
   text-align: center;
   flex: 1 0 200px;
   max-width: 200px;
@@ -61,13 +60,11 @@ body {
   margin: 10px;
   transition: transform 0.3s ease;
   border: 2px;
-  border-radius: 10px;
+  border-radius: 30%;
 }
 .game:hover {
   transform: scale(1.05);
   border: 2px solid var(--accent-color);
-  
-  
 }
 .game img {
   width: 100%;
@@ -113,8 +110,6 @@ body {
   justify-content: center;
   text-align: center;
   align-items: center;
-
-
 }
 .link {
   color: var(--accent-color);
