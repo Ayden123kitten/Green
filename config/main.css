@@ -63,7 +63,7 @@ body {
   border-radius: 30%;
 }
 .game:hover {
-  transform: scale(1.05);
+  transform: scale(0.95);
   border: 2px solid var(--accent-color);
 }
 .game img {
