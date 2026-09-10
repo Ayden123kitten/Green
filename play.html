@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game</title>
+    <title>Loading Game...</title>
     <style>
       body {
         margin: 0;
@@ -21,14 +21,29 @@
   <body>
     <iframe id="gameFrame" allowfullscreen></iframe>
     <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      const gameUrl = urlParams.get("gameurl");
+      const pathParts = window.location.pathname.split("/").filter(Boolean);
+      const slug = pathParts.length > 0 ? pathParts[0] : null;
 
-      if (!gameUrl) {
-        alert("Game URL not provided!");
+      if (!slug) {
         window.location.href = "/";
       } else {
-        document.getElementById("gameFrame").src = gameUrl;
+        fetch("/config/games.json")
+          .then((response) => response.json())
+          .then((games) => {
+            const game = games.find((g) => g.slug === slug);
+
+            if (game && game.url) {
+              document.getElementById("gameFrame").src = game.url;
+              document.title = `Playing ${game.name} | Flint And Steel Games`;
+            } else {
+              alert("Game not found!");
+              window.location.href = "/";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching games:", error);
+            window.location.href = "/";
+          });
       }
     </script>
   </body>
