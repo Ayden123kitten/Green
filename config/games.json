@@ -3,6 +3,7 @@
     "name": "Slope",
     "slug": "slope",
     "url": "/games/slope/index.html",
-    "image": "/games/slope/icon.png"
+    "image": "/games/slope/icon.png",
+    "categories": ["action", "3d"]
   }
 ]
