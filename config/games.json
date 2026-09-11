@@ -5,5 +5,12 @@
     "url": "/games/slope/index.html",
     "image": "/games/slope/icon.png",
     "categories": ["Web"]
+  },
+  {
+    "name": "Bloons Tower Defense",
+    "slug": "bloons_td",
+    "url": "/games/bloons_td/index.html",
+    "image": "/games/bloons_td/icon.png",
+    "categories": ["Web"]
   }
 ]
