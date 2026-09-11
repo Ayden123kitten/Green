@@ -84,7 +84,7 @@ function handleSearchInput() {
 fetch("/config/games.json")
   .then((response) => response.json())
   .then((data) => {
-    gamesData = data;
+    gamesData = data.sort((a, b) => a.name.localeCompare(b.name));
     
     const categorySet = new Set();
     data.forEach((game) => {
